@@ -1,4 +1,11 @@
 UserManager::Application.routes.draw do
+  get "users/index"
+
+  match 'dashboard' => 'dashboard#index'
+  match 'users' => 'users#index'
+
+  devise_for :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +55,7 @@ UserManager::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'dashboard#index'
 
   # See how all your routes lay out with "rake routes"
 

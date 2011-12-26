@@ -20,11 +20,12 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'simple_form', :git => "git://github.com/plataformatec/simple_form.git"
 gem 'doorkeeper'
-
+gem 'devise'
 
 group :test, :development do
   gem 'database_cleaner'
   gem 'rails3-generators'
+  gem 'haml-rails'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
 end
