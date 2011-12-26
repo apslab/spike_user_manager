@@ -2,5 +2,9 @@
 
 FactoryGirl.define do
   factory :user do
-    end
+    first_name  'John'
+    last_name   'Doe'
+    email       { "#{first_name}.#{last_name}@testmail.com".downcase }
+    password    'password'
+  end
 end
