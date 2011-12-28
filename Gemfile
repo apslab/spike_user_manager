@@ -19,8 +19,9 @@ end
 gem 'jquery-rails'
 gem 'haml'
 gem 'simple_form', :git => "git://github.com/plataformatec/simple_form.git"
-gem 'doorkeeper'
+#gem 'doorkeeper'
 gem 'devise'
+gem 'omniauth'
 
 group :test, :development do
   gem 'database_cleaner'

@@ -1,10 +1,14 @@
 UserManager::Application.routes.draw do
-  get "users/index"
-
-  match 'dashboard' => 'dashboard#index'
-  match 'users' => 'users#index'
-
   devise_for :users
+  
+  match 'dashboard' => 'dashboard#index'
+  #match 'users' => 'users#index'
+
+  
+  match '/auth/authorize'     => 'auth#authorize'
+  match '/auth/access_token'  => 'auth#access_token'
+  match '/auth/user'          => 'auth#user'
+  match '/auth/token'         => 'auth#token'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
