@@ -1,0 +1,3 @@
+# TODO: Agregar la validación del callback que se obtiene de la url. Para ellos se debería agregar la URL al modelo Application
+# TODO: Se puede implementar algún tipo de back_url?.  Si trato de ingresar a una url de una app y necesito autenticarme, me gustaría
+volver a la URL que intentaba ingresar inicialmente

@@ -1,14 +1,12 @@
 class AuthController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:access_token]
+  before_filter :authenticate_user!, :except => [:access_token, :user]
   skip_before_filter :verify_authenticity_token, :only => [:access_token]
 
   def authorize
     # TODO: Implement prune
     #AccessGrant.prune!    
     access_grant = current_user.access_grants.create(:application => application)
-    current_user.authentication_token = access_grant.access_token
-    current_user.save
     redirect_to access_grant.redirect_uri_for(params[:redirect_uri])
   end
 
@@ -35,16 +33,32 @@ class AuthController < ApplicationController
 
   def user
     puts "#### USER"
-    hash = {
-      :provider => 'aps',
-      :uid => current_user.id.to_s,
-      :info => {
-        :email => current_user.email, 
-        :last_name => current_user.last_name,
-        :first_name => current_user.first_name
+
+    #if current_user.nil?
+    #  logger.debug("Headers: #{request.headers['Authorization']}")
+    #  token = params[:access_token] || params[:bearer_token] || request.env['HTTP_AUTHORIZATION']
+    #  logger.debug("TOKEN: #{token}")
+    #  if token
+    #    token.gsub!(/Bearer /, '')
+    #  end
+    #  current_user = AccessGrant.find_by_access_token(token).try(:user)
+    #end
+
+    if current_user.nil? 
+      render :json => {:error => 'No posee permisos para este recurso'}, :status => :unauthorized
+      #head :unauthorized
+    else
+      hash = {
+        :provider => 'aps',
+        :uid => current_user.id.to_s,
+        :info => {
+          :email => current_user.email, 
+          :last_name => current_user.last_name,
+          :first_name => current_user.first_name
+        }
       }
-    }
-    render :json => hash.to_json
+      render :json => hash.to_json
+    end
   end
 
   def token

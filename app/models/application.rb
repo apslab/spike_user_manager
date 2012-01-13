@@ -1,5 +1,7 @@
 class Application < ActiveRecord::Base
 
+  validates_presence_of :name
+
   before_create :generate_app_id, :generate_app_secret
 
   def self.authenticate(app_id, app_secret)
