@@ -1,0 +1,48 @@
+Browser->App1: GET /resource
+note over App1
+The user is not signed in
+Delegate to AuthService
+end note
+App1->AuthService: GET /auth/authorize?response_type=code&client_id=xxx&redirect_url=app1/callback
+note over AuthService
+The user is not signed in
+Start normal sign in flow (devise)
+end note
+AuthService-->Browser: 401 Unauthorized
+Browser->AuthService: GET /users/sign_in
+AuthService-->Browser: sign_in.html (page)
+Browser->AuthService: POST /users/sign_in
+note over AuthService
+End of normal sign in flow (devise).
+Now, the user, have a new cookie 
+with session of AuthService
+end note
+AuthService->AuthService: GET /auth/authorize?response_type=code&client_id=xxx&redirect_url=app1/callback
+AuthService->App1: GET /auth/joshid/callback?code=fae83886eb2ed7e91b2a5ccb03e6a01d&response_type=code
+App1->AuthService: POST /auth/token 
+note left of AuthService
+Request a new token with the
+following information:
+grant_type: "authorization_code",
+code: fae83886eb2ed7e91b2a5ccb03>e6a01d,
+client_id: "xxx", 
+client_secret: "xxx", 
+redirect_uri: "/auth/joshid/callback"
+end note
+AuthService-->App1: token: 3e12b64d9961459d307d5ff750220ffe
+App1->AuthService: GET /auth/josh_id/user.json?oauth_token=3e12b64d9961459d307d5ff750220ffe
+AuthService-->App1: User information (as json)
+note over App1 
+Save user information and 
+create new session for app1
+end note
+App1->App1: Redirect to /resource
+Browser->App1: GET /resource
+App1-->Browser: Response to GET /resource
+note over Browser,App1
+For subsequent requests, the App1, 
+used the App1 session (cookie) 
+without need to authorize against 
+AuthService
+end note
+
