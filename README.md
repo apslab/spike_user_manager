@@ -9,6 +9,7 @@ SSO: Autenticación y autorización
 4. Los roles se agregan o revocan desde cada aplicación.
 
 ### Diagrama de interacción
-#### Entre los sistemas para autenticarse
+
+El diagrama muestra la interección entre los sistemas para autenticarse. Se generó con [web sequence diagram](http://www.websequencediagrams.com/), para modificarlo se cuenta con doc/diagram.txt
 
 ![](https://github.com/apslab/spike_user_manager/raw/master/doc/diagram.png)
